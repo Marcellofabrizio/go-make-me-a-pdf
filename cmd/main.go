@@ -5,13 +5,8 @@ import (
 	"fmt"
 
 	"github.com/go-rod/rod"
-
-	"context"
-	"log"
-	"os"
-
-	"github.com/chromedp/cdproto/page"
-	"github.com/chromedp/chromedp"
+	"github.com/go-rod/rod/lib/proto"
+	"github.com/spf13/afero"
 )
 
 func main() {
@@ -19,42 +14,44 @@ func main() {
 }
 
 func rod_pod() {
-	rod.New().MustConnect().MustPage("https://app-staging.gringo.com.vc/report-vehicle/999995756").MustWaitStable().MustPDF("sample.pdf")
+	page := rod.New().MustConnect().MustPage("https://www.olhonocarro.com.br/resultado-da-consulta/?queryCode=100&queryId=668c36793d0a5db6151a2296").MustWaitDOMStable() //.MustPDF("sample.pdf")
+
+	res := page.MustEval(`() => document.body.scrollHeight`)
+
+	scrollHeight := res.Num()
+
+	fmt.Println("scrollHeight", scrollHeight)
+
+	marginTop := 0.0
+	marginBottom := 0.0
+
+	reportPdf, err := page.PDF(&proto.PagePrintToPDF{
+		MarginBottom:    &marginBottom,
+		MarginTop:       &marginTop,
+		PrintBackground: true,
+	})
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fs := afero.NewOsFs()
+
+	bin, err := afero.ReadAll(reportPdf)
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	err = afero.WriteFile(fs, "report.pdf", bin, 0644)
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
 	fmt.Println("wrote sample.pdf")
-}
 
-func chromedp_poc() {
-	// create context
-	ctx, cancel := chromedp.NewContext(context.Background())
-	defer cancel()
-
-	// capture pdf
-	var buf []byte
-	if err := chromedp.Run(
-		ctx,
-		printToPDF(`https://app-staging.gringo.com.vc/report-vehicle/999995756`,
-			&buf),
-		chromedp.Sleep(5000)); err != nil {
-		log.Fatal(err)
-	}
-
-	if err := os.WriteFile("sample.pdf", buf, 0o644); err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println("wrote sample.pdf")
-}
-
-// print a specific pdf page.
-func printToPDF(urlstr string, res *[]byte) chromedp.Tasks {
-	return chromedp.Tasks{
-		chromedp.Navigate(urlstr),
-		chromedp.ActionFunc(func(ctx context.Context) error {
-			buf, _, err := page.PrintToPDF().WithPrintBackground(false).Do(ctx)
-			if err != nil {
-				return err
-			}
-			*res = buf
-			return nil
-		}),
-	}
 }
