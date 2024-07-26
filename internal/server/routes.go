@@ -17,7 +17,7 @@ func (s *Server) RegisterRoutes() http.Handler {
 
 func (s *Server) HelloWorldHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	resp := make(map[string]string)
-	resp["message"] = "Gastro Galaxy Back-End"
+	resp["message"] = "Go Make Me a PDF"
 
 	jsonResp, err := json.Marshal(resp)
 	if err != nil {
@@ -28,6 +28,13 @@ func (s *Server) HelloWorldHandler(w http.ResponseWriter, r *http.Request, _ htt
 }
 
 func (s *Server) HealthHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	jsonResp, _ := json.Marshal("health")
+	resp := make(map[string]string)
+	resp["message"] = "Up and Running!"
+
+	jsonResp, err := json.Marshal(resp)
+	if err != nil {
+		log.Fatalf("error handling JSON marshal. Err: %v", err)
+	}
+
 	_, _ = w.Write(jsonResp)
 }
