@@ -7,6 +7,8 @@ github.com/chromedp/sysutil v1.0.0 h1:+ZxhTpfpZlmchB58ih/LBHX52ky7w2VhQVKQMucy3I
 github.com/chromedp/sysutil v1.0.0/go.mod h1:kgWmDdq8fTzXYcKIBqIYvRRTnYb9aNS9moAV0xufSww=
 github.com/go-chi/chi/v5 v5.1.0 h1:acVI1TYaD+hhedDJ3r54HyA6sExp3HfXq7QWEEY/xMw=
 github.com/go-chi/chi/v5 v5.1.0/go.mod h1:DslCQbL2OYiznFReuXYUmQ2hGd1aDpCnlMNITLSKoi8=
+github.com/go-pkgz/routegroup v1.1.1 h1:Dm5IBiEmUbQT+3rliBimhX0SifnZp/uRF/WOu3XPmms=
+github.com/go-pkgz/routegroup v1.1.1/go.mod h1:kDDPDRLRiRY1vnENrZJw1jQAzQX7fvsbsHGRQFNQfKc=
 github.com/go-rod/rod v0.116.1 h1:BDMZY3qm/14SmvHBV7DoFUhXeJ2MbUYgumQ88b+v2WE=
 github.com/go-rod/rod v0.116.1/go.mod h1:3Ash9fYwznqz9S1uLQgQRStur4fCXjoxxGW+ym6TYjU=
 github.com/gobwas/httphead v0.1.0 h1:exrUm0f4YX0L7EBwZHuCF4GDp8aJfVeBrlLQrs6NqWU=

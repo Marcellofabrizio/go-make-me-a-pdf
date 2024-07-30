@@ -5,6 +5,7 @@ go 1.22.0
 require github.com/go-rod/rod v0.116.1
 
 require (
+	github.com/go-pkgz/routegroup v1.1.1 // indirect
 	github.com/nahojer/routes v0.0.2 // indirect
 	golang.org/x/text v0.14.0 // indirect
 )

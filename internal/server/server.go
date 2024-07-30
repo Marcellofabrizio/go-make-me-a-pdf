@@ -11,13 +11,15 @@ import (
 )
 
 type Server struct {
-	port int
+	port    int
+	rootUrl string
 }
 
 func NewServer() *http.Server {
 	port, _ := strconv.Atoi(os.Getenv("PORT"))
 	NewServer := &Server{
-		port: port,
+		port:    port,
+		rootUrl: "",
 	}
 
 	// Declare Server config
