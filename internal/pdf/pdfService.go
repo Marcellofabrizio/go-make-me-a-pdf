@@ -8,8 +8,13 @@ import (
 	"github.com/spf13/afero"
 )
 
-func rod_pod() {
-	page := rod.New().MustConnect().MustPage("https://www.olhonocarro.com.br/resultado-da-consulta/?queryCode=100&queryId=668c36793d0a5db6151a2296").MustWaitDOMStable() //.MustPDF("sample.pdf")
+func GeneratePdf(orderId string, emissionDate string, licensePlate string) {
+
+	webUrl := fmt.Sprintf("https://app.gringo.com.vc/report-vehicle/%s?emissionDate=%s&licensePlate=%s", orderId, emissionDate, licensePlate)
+
+	fmt.Printf("%s\n", webUrl)
+
+	page := rod.New().MustConnect().MustPage(webUrl).MustWaitDOMStable()
 
 	res := page.MustEval(`() => document.body.scrollHeight`)
 
@@ -48,5 +53,4 @@ func rod_pod() {
 	}
 
 	fmt.Println("wrote sample.pdf")
-
 }
